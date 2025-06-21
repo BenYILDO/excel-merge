@@ -12,6 +12,14 @@ except ImportError:
     )
     st.stop()
 
+try:
+    import xlrd  # noqa: F401
+except ImportError:
+    st.error(
+        "'xlrd' kütüphanesi yüklü değil. `.xls` dosyaları için `pip install xlrd==1.2.0` komutunu çalıştırın."
+    )
+    st.stop()
+
 st.title("Excel Dosyalarını Birleştir")
 
 uploaded_files = st.file_uploader(
