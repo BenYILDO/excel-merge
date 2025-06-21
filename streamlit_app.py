@@ -4,7 +4,13 @@ from io import BytesIO
 
 import pandas as pd
 import streamlit as st
-from openpyxl import Workbook, load_workbook
+try:
+    from openpyxl import Workbook, load_workbook
+except ImportError:
+    st.error(
+        "'openpyxl' kütüphanesi yüklü değil. Lütfen `pip install openpyxl` komutuyla kurun."
+    )
+    st.stop()
 
 st.title("Excel Dosyalarını Birleştir")
 
