@@ -25,9 +25,15 @@ if uploaded_files and st.button("Birleştir"):
         merged_wb = load_workbook(BytesIO(first_file.getvalue()))
         merged_ws = merged_wb.active
     else:
-        df = pd.read_excel(BytesIO(first_file.getvalue()), header=0 if has_header else None)
+        df = pd.read_excel(
+            BytesIO(first_file.getvalue()),
+            header=0 if has_header else None,
+            engine="xlrd",
+        )
         merged_wb = Workbook()
         merged_ws = merged_wb.active
+        if has_header:
+            merged_ws.append(list(df.columns))
         for row in df.itertuples(index=False):
             merged_ws.append(list(row))
 
@@ -49,7 +55,11 @@ if uploaded_files and st.button("Birleştir"):
                         new_cell.protection = copy(cell.protection)
                         new_cell.alignment = copy(cell.alignment)
         else:
-            df = pd.read_excel(BytesIO(file.getvalue()), header=0 if has_header else None)
+            df = pd.read_excel(
+                BytesIO(file.getvalue()),
+                header=0 if has_header else None,
+                engine="xlrd",
+            )
             for row in df.itertuples(index=False):
                 merged_ws.append(list(row))
 
